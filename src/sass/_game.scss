@@ -1,0 +1,192 @@
+@import "general";
+
+.main-screen {
+  height: 100vh;
+  width: 100%;
+  @include background();
+}
+
+.info {
+  height: 20vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@mixin counter(){
+  width: 20%;
+  height: 80%;
+  background-color: $color1;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 30px;
+  .name {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h3 {
+      font-size: 26px;
+      color: white;
+    }
+  }
+  .value {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    h3 {
+      font-size: 55px;
+      color: white;
+    }
+  }
+}
+
+.question-counter {
+  @include counter();
+}
+
+.point-counter {
+  @include counter();
+}
+
+.timer {
+  @include counter();
+}
+
+.level-counter {
+  @include counter();
+}
+
+.question {
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .question-frame {
+    height: 90%;
+    width: 50%;
+    background-color: $color3;
+    display: flex;
+    align-items: center;
+    h3 {
+      color: white;
+      font-size: 30px;
+      text-transform: uppercase;
+      line-height: 50px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+}
+
+.answers {
+  height: 40vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  div {
+    height: 30%;
+    width: 40%;
+    background-color: $color2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    transition: 0.2s all;
+    h3 {
+      color: white;
+      font-size: 25px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.answers div:hover {
+  background-color: $color3;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .question {
+    .question-frame {
+      width: 70%;
+      h3 {
+        font-size: 25px;
+        padding-left: 30px;
+        padding-right: 30px;
+      }
+    }
+  }
+  @mixin counterMid(){
+    width: 23%;
+    .name {
+      h3 {
+        font-size: 22px;
+      }
+    }
+    .value {
+      h3 {
+        font-size: 45px;
+      }
+    }
+  }
+  .question-counter {
+    @include counterMid();
+  }
+  .point-counter {
+    @include counterMid();
+  }
+  .timer {
+    @include counterMid();
+  }
+  .level-counter {
+    @include counterMid();
+  }
+}
+
+@media (max-width: 500px) {
+  .question {
+    .question-frame {
+      width: 90%;
+      h3 {
+        font-size: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+  }
+  @mixin counterSmall(){
+    width: 23%;
+    .name {
+      h3 {
+        font-size: 18px;
+      }
+    }
+    .value {
+      h3 {
+        font-size: 25px;
+      }
+    }
+  }
+  .question-counter {
+    @include counterSmall();
+  }
+  .point-counter {
+    @include counterSmall();
+  }
+  .timer {
+    @include counterSmall();
+  }
+  .level-counter {
+    @include counterSmall();
+  }
+  .answers {
+    div {
+      h3 {
+        font-size: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,115 @@
+@import "general";
+
+.welcome-screen {
+  height: 100vh;
+  width: 100%;
+  @include background();
+}
+
+.title {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    font-size: 100px;
+    text-transform: uppercase;
+    color: $color1;
+  }
+}
+
+.instruction {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    font-size: 40px;
+    color: $color1;
+  }
+}
+
+.categories {
+  height: 55vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.category {
+  width: 30%;
+  height: 45%;
+  background-color: $color2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  text-transform: uppercase;
+  transition: 0.2s all;
+}
+
+.category:hover {
+  background-color: $color3;
+  border: 3px solid white;
+  cursor: pointer;
+}
+
+.start {
+  height: 15vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.start button {
+  height: 60%;
+  width: 30%;
+  background-color: $color1;
+  border-radius: 15px;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Dosis', sans-serif;
+  margin-top: 10px;
+  text-transform: uppercase;
+  color: white;
+  transition: 0.2s all;
+}
+
+.start button:hover {
+  font-size: 40px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .category {
+    width: 45%;
+    height: 30%;
+  }
+  .start button {
+    width: 40%;
+  }
+}
+
+@media (max-width: 500px) {
+  .title {
+    h1 {
+      font-size: 80px;
+    }
+  }
+  .instruction {
+    h3 {
+      font-size: 25px;
+    }
+  }
+  .category {
+    font-size: 26px;
+  }
+  .start button {
+    width: 50%;
+    font-size: 20px;
+  }
+  .start button:hover {
+    font-size: 25px;
+  }
+}

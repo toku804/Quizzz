@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Dosis', sans-serif;
+}
+
+$color1: #221E22;
+$color2: #44355B;
+$color3: #31263E;
+
+@mixin background(){
+  background: rgba(238,86,34,1);
+  background: -moz-linear-gradient(top, rgba(238,86,34,1) 0%, rgba(238,86,34,1) 28%, rgba(236,167,44,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(238,86,34,1)), color-stop(28%, rgba(238,86,34,1)), color-stop(100%, rgba(236,167,44,1)));
+  background: -webkit-linear-gradient(top, rgba(238,86,34,1) 0%, rgba(238,86,34,1) 28%, rgba(236,167,44,1) 100%);
+  background: -o-linear-gradient(top, rgba(238,86,34,1) 0%, rgba(238,86,34,1) 28%, rgba(236,167,44,1) 100%);
+  background: -ms-linear-gradient(top, rgba(238,86,34,1) 0%, rgba(238,86,34,1) 28%, rgba(236,167,44,1) 100%);
+  background: linear-gradient(to bottom, rgba(238,86,34,1) 0%, rgba(238,86,34,1) 28%, rgba(236,167,44,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ee5622', endColorstr='#eca72c', GradientType=0 );
+}
