@@ -62,7 +62,7 @@
   align-items: flex-start;
 }
 
-.start button {
+.start a {
   height: 60%;
   width: 30%;
   background-color: $color1;
@@ -72,11 +72,15 @@
   font-family: 'Dosis', sans-serif;
   margin-top: 10px;
   text-transform: uppercase;
+  text-decoration: none;
   color: white;
   transition: 0.2s all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.start button:hover {
+.start a:hover {
   font-size: 40px;
   cursor: pointer;
 }
@@ -86,7 +90,7 @@
     width: 45%;
     height: 30%;
   }
-  .start button {
+  .start a {
     width: 40%;
   }
 }
@@ -105,11 +109,11 @@
   .category {
     font-size: 26px;
   }
-  .start button {
+  .start a {
     width: 50%;
     font-size: 20px;
   }
-  .start button:hover {
+  .start a:hover {
     font-size: 25px;
   }
 }

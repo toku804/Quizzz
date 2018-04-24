@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/agatablue/ToDo-React.git"
+    "url": "git+https://github.com/toku804/Quizzz.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/agatablue/ToDo-React/issues"
+    "url": "https://github.com/toku804/Quizzz/issues"
   },
-  "homepage": "https://github.com/agatablue/ToDo-React#readme",
+  "homepage": "https://github.com/toku804/Quizzz#readme",
   "devDependencies": {
     "autoprefixer": "^7.1.6",
     "babel-core": "^6.26.0",
