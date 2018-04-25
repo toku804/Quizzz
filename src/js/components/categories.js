@@ -25,8 +25,8 @@ const urls = [
         id: 5
     },
     {
-        url: 'https://opentdb.com/api.php?amount=10&category=27&difficulty=easy&type=multiple',
-        nameCategory: 'Animals',
+        url: 'https://opentdb.com/api.php?amount=10&category=12&difficulty=easy&type=multiple',
+        nameCategory: 'Music',
         id: 6
     }
 ];

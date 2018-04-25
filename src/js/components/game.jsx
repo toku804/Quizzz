@@ -10,9 +10,10 @@ class Game extends React.Component {
             questions: [],
             counter: 1,
             points: 0,
-            level: 1,
+            timer: 15,
             answers: [],
             correctAnswer: '',
+            clickedAns: -1,
             isCorrect: false,
             isIncorrect: false,
             correctAnswerStyle: {},
@@ -33,22 +34,56 @@ class Game extends React.Component {
 
             this.setState({
                 questions: response,
-                correctAnswer: response.results[this.state.counter-1].correct_answer,
+                correctAnswer: correct,
                 answers: answers
-            })
+            });
+
+            console.log(response);
         });
+
+
+
+        this.timer()
 
     }
 
-    // showAnswers = () => {
-    //     const arrayQuestions = this.state.questions.results;
-    //     const incorrect = arrayQuestions != undefined ? arrayQuestions[this.state.counter-1].incorrect_answers : [];
-    //     const correct = arrayQuestions != undefined ? arrayQuestions[this.state.counter-1].correct_answer : [];
-    //     return incorrect.concat(correct).sort();
-    // };
+    timer = () => {
+
+        this.interval = setInterval( () => {
+            this.setState({
+                timer: this.state.timer - 1
+            });
+            if(this.state.timer == 0){
+                this.setState({
+                    counter: this.state.counter < 10 ? (this.state.counter + 1) : 10,
+                    timer: 10
+                })
+            }
+        }, 1000)
+
+    };
+
 
     handleClickAnswers = (event, i) => {
-        let cnt = this.state.counter + 1;
+        const cnt = this.state.counter < 10 ? (this.state.counter + 1) : 10;
+        const incorAns = this.state.questions.results[cnt-1].incorrect_answers;
+        const corAns = this.state.questions.results[cnt-1].correct_answer;
+        const ans = incorAns.concat(corAns).sort();
+
+        clearInterval(this.interval);
+
+        this.timeout = setTimeout( () => {
+            this.timer();
+            this.setState({
+                answers: ans,
+                correctAnswer: corAns,
+                counter: cnt,
+                isCorrect: false,
+                isIncorrect: false,
+                timer: 10
+            });
+        }, 1500);
+
         if (this.state.answers[i] == this.state.correctAnswer){
             let pts = this.state.points + 1;
             this.setState({
@@ -56,8 +91,8 @@ class Game extends React.Component {
                 correctAnswerStyle: {
                     backgroundColor: 'green'
                 },
-                counter: cnt,
-                points: pts
+                points: pts,
+                clickedAns: i
             })
         } else {
             this.setState({
@@ -65,7 +100,7 @@ class Game extends React.Component {
                 incorrectAnswerStyle: {
                     backgroundColor: 'red'
                 },
-                counter: cnt
+                clickedAns: i
             })
         }
     };
@@ -73,12 +108,40 @@ class Game extends React.Component {
 
     render(){
 
-        console.log(this.state.answers);
-        console.log(this.state.correctAnswer);
+
+        console.log(this.state.counter);
+
         const arrayQuestions = this.state.questions.results;
-        const questionToShow = arrayQuestions != undefined ? arrayQuestions[this.state.counter-1].question : '';
+        let question, ansCor, ansInc, answ, answBoxes, questionToShow;
 
+        if(arrayQuestions != undefined) {
 
+            question = arrayQuestions != undefined ? arrayQuestions[this.state.counter-1].question : '';
+
+            function createMarkup(text) { return {__html: text}; }
+            questionToShow = <h3 dangerouslySetInnerHTML={createMarkup(question)} />;
+
+            ansCor = arrayQuestions[this.state.counter-1].correct_answer;
+            ansInc = arrayQuestions[this.state.counter-1].incorrect_answers;
+            answ = ansInc.concat(ansCor).sort();
+            console.log(ansCor);
+
+            answBoxes = answ.map( (elem,i) => {
+                let style;
+                if (this.state.isCorrect) {
+                    style = (i === this.state.clickedAns) ? this.state.correctAnswerStyle : {}
+                }
+                if (this.state.isIncorrect) {
+                    style = (i === this.state.clickedAns) ? this.state.incorrectAnswerStyle : {}
+                }
+                return <div className="answer"
+                            key={i}
+                            onClick={event => this.handleClickAnswers(event, i)}
+                            style={ style }>
+                    <h3 dangerouslySetInnerHTML={createMarkup(elem)}/>
+                </div>
+            });
+        }
 
 
         return <section className="main-screen">
@@ -104,44 +167,17 @@ class Game extends React.Component {
                                 <h3>Timer</h3>
                             </div>
                             <div className="value">
-                                <h3>0:08</h3>
-                            </div>
-                        </div>
-                        <div className="level-counter">
-                            <div className="name">
-                                <h3>Level</h3>
-                            </div>
-                            <div className="value">
-                                <h3>{this.state.level} / 3</h3>
+                                <h3>{this.state.timer}</h3>
                             </div>
                         </div>
                     </div>
                     <div className="question">
                         <div className="question-frame">
-                            <h3>{questionToShow}</h3>
+                           {questionToShow}
                         </div>
                     </div>
                     <div className="answers">
-                        <div className="answer-1"
-                             onClick={event => this.handleClickAnswers(event, 0)}
-                             style={this.state.isCorrect ? this.state.correctAnswerStyle : this.state.incorrectAnswerStyle}>
-                            <h3>{this.state.answers[0]}</h3>
-                        </div>
-                        <div className="answer-2"
-                             onClick={event => this.handleClickAnswers(event, 1)}
-                             style={this.state.isCorrect ? this.state.correctAnswerStyle : this.state.incorrectAnswerStyle}>
-                            <h3>{this.state.answers[1]}</h3>
-                        </div>
-                        <div className="answer-3"
-                             onClick={event => this.handleClickAnswers(event, 2)}
-                             style={this.state.isCorrect ? this.state.correctAnswerStyle : this.state.incorrectAnswerStyle}>
-                            <h3>{this.state.answers[2]}</h3>
-                        </div>
-                        <div className="answer-4"
-                             onClick={event => this.handleClickAnswers(event, 3)}
-                             style={this.state.isCorrect ? this.state.correctAnswerStyle : this.state.incorrectAnswerStyle}>
-                            <h3>{this.state.answers[3]}</h3>
-                        </div>
+                        {answBoxes}
                     </div>
                 </section>
     }
