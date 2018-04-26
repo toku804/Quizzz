@@ -6,7 +6,6 @@ import {
 
 class Over extends React.Component {
     render(){
-        console.log(this.props);
 
         return <section className="game-over">
                     <div className="score-info">

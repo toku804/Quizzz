@@ -26998,8 +26998,7 @@ var Game = function (_React$Component) {
                         counter: cnt,
                         isCorrect: false,
                         isIncorrect: false,
-                        timer: 15,
-                        isClicked: true
+                        timer: 15
                     });
                 }, 1500);
 
@@ -27038,8 +27037,7 @@ var Game = function (_React$Component) {
             isIncorrect: false,
             correctAnswerStyle: {},
             incorrectAnswerStyle: {},
-            gameOver: false,
-            isClicked: false
+            gameOver: false
         };
         return _this;
     }
@@ -27066,8 +27064,6 @@ var Game = function (_React$Component) {
                     correctAnswer: correct,
                     answers: answers
                 });
-
-                console.log(response);
             });
 
             this.timer();
@@ -27103,8 +27099,6 @@ var Game = function (_React$Component) {
                 ansCor = arrayQuestions[this.state.counter - 1].correct_answer;
                 ansInc = arrayQuestions[this.state.counter - 1].incorrect_answers;
                 answ = ansInc.concat(ansCor).sort();
-
-                // console.log(ansCor);
 
                 answBoxes = answ.map(function (elem, i) {
                     var style = void 0;
@@ -27271,7 +27265,6 @@ var Over = function (_React$Component) {
     _createClass(Over, [{
         key: 'render',
         value: function render() {
-            console.log(this.props);
 
             return _react2.default.createElement(
                 'section',
