@@ -35,18 +35,19 @@
     margin-bottom: 30px;
     color: $color1;
   }
-  button {
+  a {
     font-size: 40px;
     padding: 15px 25px 15px 25px;
     border-radius: 10px;
     text-transform: uppercase;
+    text-decoration: none;
     font-weight: bold;
     font-family: 'Dosis', sans-serif;
     background-color: $color1;
     color: white;
     transition: 0.2s all;
   }
-  button:hover {
+  a:hover {
     background-color: $color2;
     cursor: pointer;
   }

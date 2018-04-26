@@ -1,16 +1,21 @@
 import React from 'react';
+import {
+    Link,
+} from 'react-router-dom';
 
 
 class Over extends React.Component {
     render(){
+        console.log(this.props);
+
         return <section className="game-over">
                     <div className="score-info">
                         <h2>Game Over!</h2>
-                        <h3>Your score: <span>22</span> / <span>30</span></h3>
+                        <h3>Your score: <span>{this.props.match.params.points}</span></h3>
                     </div>
                     <div className="replay">
                         <h3>Wanna play again?</h3>
-                        <button>Sure!</button>
+                        <Link to={'/welcome'}>Sure!</Link>
                     </div>
                 </section>
     }

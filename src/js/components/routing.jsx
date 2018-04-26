@@ -18,7 +18,7 @@ const Routing = () => {
                 <Route exact path='/' component={App} />
                 <Route path='/welcome' component={Welcome}/>
                 <Route path='/game/:cat' component={Game}/>
-                <Route path='/over' component={Over}/>
+                <Route path='/over/:points' component={Over}/>
                 <Route path='*' component={NotFound} />
             </Switch>
         </div>

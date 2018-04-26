@@ -1,5 +1,8 @@
 import React from 'react';
-import {urls} from './categories.js'
+import {urls} from './categories.js';
+import {
+    Redirect
+} from "react-router-dom";
 
 
 class Game extends React.Component {
@@ -17,7 +20,9 @@ class Game extends React.Component {
             isCorrect: false,
             isIncorrect: false,
             correctAnswerStyle: {},
-            incorrectAnswerStyle: {}
+            incorrectAnswerStyle: {},
+            gameOver: false,
+            isClicked: false
         }
     }
 
@@ -41,80 +46,87 @@ class Game extends React.Component {
             console.log(response);
         });
 
-
-
-        this.timer()
+        this.timer();
 
     }
 
     timer = () => {
-
         this.interval = setInterval( () => {
             this.setState({
                 timer: this.state.timer - 1
             });
+
             if(this.state.timer == 0){
+
                 this.setState({
-                    counter: this.state.counter < 10 ? (this.state.counter + 1) : 10,
-                    timer: 10
+                    counter: this.state.counter + 1,//< 10 ? (this.state.counter + 1) : 10,
+                    timer: 15,
+                    gameOver: this.state.counter >= 10 ? true : false
                 })
             }
         }, 1000)
-
     };
 
-
     handleClickAnswers = (event, i) => {
-        const cnt = this.state.counter < 10 ? (this.state.counter + 1) : 10;
-        const incorAns = this.state.questions.results[cnt-1].incorrect_answers;
-        const corAns = this.state.questions.results[cnt-1].correct_answer;
-        const ans = incorAns.concat(corAns).sort();
+        const cnt = this.state.counter +1;
 
         clearInterval(this.interval);
 
-        this.timeout = setTimeout( () => {
-            this.timer();
+        if(cnt > 10){
             this.setState({
-                answers: ans,
-                correctAnswer: corAns,
-                counter: cnt,
-                isCorrect: false,
-                isIncorrect: false,
-                timer: 10
-            });
-        }, 1500);
-
-        if (this.state.answers[i] == this.state.correctAnswer){
-            let pts = this.state.points + 1;
-            this.setState({
-                isCorrect: true,
-                correctAnswerStyle: {
-                    backgroundColor: 'green'
-                },
-                points: pts,
-                clickedAns: i
+                gameOver: true
             })
         } else {
-            this.setState({
-                isIncorrect: true,
-                incorrectAnswerStyle: {
-                    backgroundColor: 'red'
-                },
-                clickedAns: i
-            })
+            const incorAns = this.state.questions.results[cnt-1].incorrect_answers;
+            const corAns = this.state.questions.results[cnt-1].correct_answer;
+            const ans = incorAns.concat(corAns).sort();
+
+            this.timeout = setTimeout( () => {
+                this.timer();
+                this.setState({
+                    answers: ans,
+                    correctAnswer: corAns,
+                    counter: cnt,
+                    isCorrect: false,
+                    isIncorrect: false,
+                    timer: 15,
+                    isClicked:true
+                });
+            }, 1500);
+
+            if (this.state.answers[i] == this.state.correctAnswer){
+                let pts = this.state.points + 1;
+                this.setState({
+                    isCorrect: true,
+                    correctAnswerStyle: {
+                        backgroundColor: 'green'
+                    },
+                    points: pts,
+                    clickedAns: i
+                })
+            } else {
+                this.setState({
+                    isIncorrect: true,
+                    incorrectAnswerStyle: {
+                        backgroundColor: 'red'
+                    },
+                    clickedAns: i
+                })
+            }
         }
     };
 
+    componentWillUnmount(){
+        clearInterval(this.interval);
+        clearTimeout(this.timeout);
+    }
 
     render(){
-
-
-        console.log(this.state.counter);
 
         const arrayQuestions = this.state.questions.results;
         let question, ansCor, ansInc, answ, answBoxes, questionToShow;
 
-        if(arrayQuestions != undefined) {
+        if(arrayQuestions != undefined && !this.state.gameOver) {
 
             question = arrayQuestions != undefined ? arrayQuestions[this.state.counter-1].question : '';
 
@@ -124,7 +136,8 @@ class Game extends React.Component {
             ansCor = arrayQuestions[this.state.counter-1].correct_answer;
             ansInc = arrayQuestions[this.state.counter-1].incorrect_answers;
             answ = ansInc.concat(ansCor).sort();
-            console.log(ansCor);
+
+            // console.log(ansCor);
 
             answBoxes = answ.map( (elem,i) => {
                 let style;
@@ -141,6 +154,11 @@ class Game extends React.Component {
                     <h3 dangerouslySetInnerHTML={createMarkup(elem)}/>
                 </div>
             });
+        }
+
+        const { from } = this.props.location.state || { from: { pathname: "/over/" + this.state.points } };
+        if (this.state.gameOver) {
+            return <Redirect to={from} />;
         }
 
 
@@ -182,6 +200,5 @@ class Game extends React.Component {
                 </section>
     }
 }
-
 
 export {Game};

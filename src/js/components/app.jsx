@@ -1,6 +1,5 @@
 import React from 'react';
 import {Welcome} from "./welcome.jsx";
-import {Over} from "./over.jsx";
 
 
 class App extends React.Component {
@@ -8,11 +7,9 @@ class App extends React.Component {
         super(props)
     }
 
-
     render() {
         return <div>
             <Welcome/>
-            <Over/>
         </div>
     }
 }

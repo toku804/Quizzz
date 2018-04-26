@@ -16,7 +16,6 @@ class Welcome extends React.Component {
         }
     }
 
-
     handleClickCategory = (event,i) => {
         const clickedCat = urls[i];
         this.setState({
@@ -30,9 +29,7 @@ class Welcome extends React.Component {
         });
     };
 
-
     render(){
-
         const boxes = urls.map( (elem,i) => {
             return  <div style={ i === this.state.clickedBox ? this.state.clickedStyle : {} }
                          key={i}
